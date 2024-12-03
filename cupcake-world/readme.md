@@ -2,7 +2,7 @@
 
 
 Cupcake World é uma plataforma online dedicada a oferecer uma experiência única na compra de cupcakes artesanais. Desenvolvido com tecnologias modernas e integrado com soluções robustas como Shopify e Airtable, o site proporciona uma navegação intuitiva, design responsivo e um sistema de gerenciamento de pedidos eficiente.
-![Logo](https://drive.google.com/file/d/1ptIfy4Y390TILp6SB4hZrkCHhLXWt6TW/view?usp=sharing)
+![Logo](cupcake-world/logo.jpg)
 
 
 ## 🧁 Descrição do Projeto
