@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cupcake World - Cadastro</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* Apply border-box globally for consistent sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Reset default margins and paddings */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* Body setup with Flexbox */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures full viewport height */
+    }
+
+    /* Container takes up available space */
+    .container {
+      flex: 1; /* Allows the container to take up all available vertical space */
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Header Styles */
+    .header {
+      background-color: #f8c6c6;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .header img {
+      height: 50px;
+      vertical-align: middle;
+    }
+
+    .header .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+      color: #d35d6e;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+
+    .header .nav {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .header .nav a {
+      color: #ffffff;
+      background-color: #d35d6e;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 0 5px;
+      font-weight: 500;
+    }
+
+    .header .icons {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header .icons i {
+      color: #d35d6e;
+      font-size: 24px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+
+    /* Form Styles */
+    .container h2 {
+      color: #ff6600;
+      text-align: center;
+      margin-bottom: 20px;
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      position: relative; 
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #333;
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: 'Roboto', sans-serif; 
+    }
+
+    .form-group input[type="password"] {
+    }
+
+    .form-group .password-icon {
+      position: absolute;
+      right: 10px;
+      top: 35px;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #d9534f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+      font-family: 'Roboto', sans-serif; 
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #c9302c;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #f47c20;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      flex-shrink: 0; 
+      font-family: 'Roboto', sans-serif;
+      flex-wrap: wrap; /* Ensures responsiveness */
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+      transition: text-decoration 0.3s ease;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer div {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer span {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .footer a i {
+      margin: 0 10px;
+      font-size: 20px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .header .nav {
+        display: none; /* Hide navigation links on smaller screens */
+      }
+
+      .header .logo {
+        margin-left: 0;
+      }
+
+      .header .icons {
+        right: 10px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+
+      .footer div {
+        margin-bottom: 10px;
+      }
+    }
+
+            /* Cart Sidebar Styles */
+    #cart-sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+        }
+
+        #cart-sidebar button#cart-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        }
+
+        .cart-item button.decrease-qty,
+        .cart-item button.increase-qty {
+        background-color: #c82333;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin: 0 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .cart-item button.decrease-qty:hover,
+        .cart-item button.increase-qty:hover {
+        background-color: #a71d2a;
+        }
+
+        .cart-item .item-quantity {
+        font-size: 16px;
+        margin: 0 5px;
+        }
+
+        .remove-item {
+        background-color: #d9534f;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin-top: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .remove-item:hover {
+        background-color: #c9302c;
+        }
+
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <img alt="Cupcake World Logo" src="https://storage.googleapis.com/a1aa/image/eSGcc0zU9etBpUeEYIY6GBQsf2cvrdCINZgMtfy6yAVqyrteE.jpg" width="50" height="50"/>
+    <span class="logo">Cupcake World</span>
+    <div class="nav">
+        <a href="index.html">Início</a>
+        <a href="cupcakes.html">Cupcakes</a>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="suporte.html">Suporte</a>
+    </div>
+    <div class="icons">
+        <i class="fas fa-shopping-cart" id="cart-button"></i>
+        <a href="perfil.html">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <h2>REALIZE O SEU CADASTRO!</h2>
+    <!-- Start of the form -->
+    <form id="registrationForm">
+      <!-- Removed action and method attributes -->
+      <div class="form-group">
+        <label for="nome">Nome completo (sem abreviações)</label>
+        <input id="nome" name="nome" type="text" placeholder="Jane Smith" required/>
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" placeholder="seuemail@exemplo.com" required/>
+      </div>
+      <div class="form-group">
+        <label for="data-nascimento">Data de nascimento</label>
+        <input id="data-nascimento" name="data_nascimento" type="date" required/>
+      </div>
+      <div class="form-group">
+        <label for="cpf">CPF</label>
+        <input id="cpf" name="cpf" type="text" placeholder="000.000.000-00" required/>
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" required/>
+      </div>
+      <div class="form-group">
+        <label for="confirmar-senha">Confirmação da senha</label>
+        <input id="confirmar-senha" name="confirmar_senha" type="password" required/>
+      </div>
+      <div class="form-group">
+        <label for="telefone">Telefone</label>
+        <input id="telefone" name="telefone" type="text" placeholder="(00) 00000-0000" required/>
+      </div>
+      <!-- Error message display -->
+      <p id="error-message" style="color: red; display: none;"></p>
+      <!-- Success message display -->
+      <p id="success-message" style="color: green; display: none;"></p>
+      <button class="btn" type="submit">Cadastrar</button>
+    </form>
+    <!-- End of the form -->
+  </div>
+  <!-- Footer Section -->
+  <div class="footer">
+    <div>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="perfil.html">Meu perfil</a>
+        <a href="historico.html">Histórico de pedidos</a>
+        <a href="cupcakes.html">Nosso cardápio</a>
+    </div>
+    <div>
+      <span>Siga-nos nas redes sociais!</span>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+ <!-- Cart Sidebar -->
+<div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items serão inseridos dinamicamente aqui -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>
+</body>
+   <!-- JavaScript for form validation -->
+   <script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      const senha = document.getElementById('senha').value;
+      const confirmarSenha = document.getElementById('confirmar-senha').value;
+      const errorMessage = document.getElementById('error-message');
+      const successMessage = document.getElementById('success-message');
+
+      // Clear previous messages
+      errorMessage.style.display = 'none';
+      successMessage.style.display = 'none';
+
+      if (senha !== confirmarSenha) {
+        errorMessage.textContent = 'As senhas não coincidem.';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // Collect form data
+      const formData = {
+        nome: document.getElementById('nome').value,
+        email: document.getElementById('email').value,
+        data_nascimento: document.getElementById('data-nascimento').value,
+        cpf: document.getElementById('cpf').value,
+        senha: senha,
+        confirmar_senha: confirmarSenha,
+        telefone: document.getElementById('telefone').value
+      };
+
+      // Send data to the server using fetch
+      fetch('/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          successMessage.textContent = data.message;
+          successMessage.style.display = 'block';
+          document.getElementById('registrationForm').reset();
+          //window.location.href = '/login.html';
+        } else {
+          errorMessage.textContent = data.message;
+          errorMessage.style.display = 'block';
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        errorMessage.textContent = 'Ocorreu um erro ao processar o cadastro.';
+        errorMessage.style.display = 'block';
+      });
+    });
+
+    let variantsMapping = {};
+
+    // Fetch the variantsMapping.json file (apenas uma vez)
+    fetch('/variantsMapping.json')
+    .then(response => response.json())
+    .then(data => {
+        variantsMapping = data;
+        console.log('Variants mapping loaded:', variantsMapping);
+        initProductPage();
+        handleBuy();
+    })
+    .catch(error => {
+        console.error('Error loading variants mapping:', error);
+    });
+
+    // Gerenciamento do Carrinho
+    const Cart = {
+    key: 'cartItems',
+    getCart: function() {
+        const cart = localStorage.getItem(this.key);
+        return cart ? JSON.parse(cart) : [];
+    },
+    saveCart: function(cart) {
+        localStorage.setItem(this.key, JSON.stringify(cart));
+    },
+    addItem: function(item) {
+        const cart = this.getCart();
+        // Verificar se o item já existe (mesmo variantId)
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.variantId === item.variantId);
+        if (existingItemIndex !== -1) {
+        // Atualizar quantidade existente
+        cart[existingItemIndex].quantidade += item.quantidade;
+        } else {
+        cart.push(item);
+        }
+        this.saveCart(cart);
+    },
+    removeItem: function(index) {
+        const cart = this.getCart();
+        cart.splice(index, 1);
+        this.saveCart(cart);
+    },
+    clearCart: function() {
+        this.saveCart([]);
+    },
+    updateQuantity: function(index, delta) {
+        const cart = this.getCart();
+        const newQuantity = cart[index].quantidade + delta;
+        if (newQuantity > 0) {
+        cart[index].quantidade = newQuantity;
+        } else {
+        // Remover item se a quantidade for zero ou negativa
+        cart.splice(index, 1);
+        }
+        this.saveCart(cart);
+    }
+    };
+
+    // Função para formatar moeda
+    function formatCurrency(value) {
+    return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    // Função para atualizar o carrinho na sidebar
+    function updateCartSidebar() {
+    const cart = Cart.getCart();
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+
+    // Limpar itens atuais
+    cartItemsContainer.innerHTML = '';
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        // Calcular subtotal
+        const subtotal = parseFloat(item.preco) * item.quantidade;
+        total += subtotal;
+
+        itemDiv.innerHTML = `
+        <p><strong>${item.nome}</strong></p>
+        <p>Cobertura: ${item.cobertura}</p>
+        <p>Confeites: ${item.confeite}</p>
+        <p>
+            <button class="decrease-qty" data-index="${index}">-</button>
+            <span class="item-quantity">${item.quantidade}</span>
+            <button class="increase-qty" data-index="${index}">+</button>
+        </p>
+        <p>Subtotal: ${formatCurrency(subtotal.toFixed(2))}</p>
+        <button data-index="${index}" class="remove-item">Remover</button>
+        <hr/>
+        `;
+
+        cartItemsContainer.appendChild(itemDiv);
+    });
+
+    cartTotal.textContent = formatCurrency(total.toFixed(2));
+
+    // Adicionar event listeners para remover itens
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.removeItem(index);
+        updateCartSidebar();
+        });
+    });
+
+    // Adicionar event listeners para aumentar quantidade
+    const increaseButtons = document.querySelectorAll('.increase-qty');
+    increaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.updateQuantity(index, 1);
+        updateCartSidebar();
+        });
+    });
+
+    // Adicionar event listeners para diminuir quantidade
+    const decreaseButtons = document.querySelectorAll('.decrease-qty');
+    decreaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.updateQuantity(index, -1);
+        updateCartSidebar();
+        });
+    });
+    }
+
+    // Função para mostrar a sidebar do carrinho
+    function showCartSidebar() {
+    document.getElementById('cart-sidebar').style.display = 'block';
+    }
+
+    // Função para esconder a sidebar do carrinho
+    function hideCartSidebar() {
+    document.getElementById('cart-sidebar').style.display = 'none';
+    }
+
+    // Função para lidar com o clique no botão "Adicionar ao carrinho"
+    function handleAddToCart(product) {
+    const addToCartBtn = product.querySelector('.add-to-cart');
+
+    addToCartBtn.addEventListener('click', function() {
+        const nome = product.querySelector('h3').textContent.trim();
+        const precoText = product.querySelector('.price') ? product.querySelector('.price').textContent : product.querySelector('p').textContent;
+        let preco = 0;
+        if (precoText.includes('Preço: R$ ')) {
+        preco = precoText.replace('Preço: R$ ', '').replace(',', '.');
+        } else {
+        preco = precoText.replace('R$', '').replace(',', '.');
+        }
+
+        const cobertura = product.querySelector('input[name="cobertura"]:checked')?.value.trim() || '';
+        const confeite = product.querySelector('input[name="confeite"]:checked')?.value.trim() || '';
+
+        // Obter o nome do produto
+        const productName = product.getAttribute('data-product-name') || nome;
+
+        // Determinar o variantId com base no nome do produto, cobertura e confeite
+        const key = `${productName}|${cobertura}|${confeite}`;
+        const variantId = variantsMapping[key];
+
+        if (!variantId) {
+        alert('Selecione uma combinação válida de cobertura e confeite.');
+        return;
+        }
+
+        const quantidade = 1; // Quantidade inicial
+
+        const item = {
+        nome,
+        preco,
+        cobertura,
+        confeite,
+        variantId,
+        quantidade
+        };
+
+        Cart.addItem(item);
+        updateCartSidebar();
+        showCartSidebar();
+    });
+    }
+
+    // Função para inicializar a página de produto
+    function initProductPage() {
+    const products = document.querySelectorAll('.product-item');
+    products.forEach(product => handleAddToCart(product));
+
+    // Inicializar a sidebar do carrinho
+    updateCartSidebar();
+
+    // Event listeners para fechar a sidebar do carrinho
+    document.getElementById('cart-close').addEventListener('click', hideCartSidebar);
+
+    // Event listener para abrir a sidebar do carrinho
+    document.getElementById('cart-button').addEventListener('click', showCartSidebar);
+    }
+
+    // Função para lidar com o clique no botão "Comprar"
+    function handleBuy() {
+    const buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function() {
+        const cart = Cart.getCart();
+
+        if (cart.length === 0) {
+        alert('Seu carrinho está vazio.');
+        return;
+        }
+
+        // Enviar dados do carrinho para o servidor
+        fetch('/create-order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ cart })
+        })
+        .then(async response => {
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Erro desconhecido.');
+        }
+        return result;
+        })
+        .then(result => {
+        if (result.success) {
+            // Limpar o carrinho
+            Cart.clearCart();
+            updateCartSidebar();
+
+            // Redirecionar para a URL de checkout do Shopify
+            window.location.href = result.checkoutUrl;
+        }
+        })
+        .catch(error => {
+            console.error('Error creating order:', error);
+            // Verifique se o objeto de erro possui uma mensagem
+            const errorMessage = error.message || 'Erro desconhecido.';
+            alert(`Erro ao criar o pedido: ${errorMessage}`);
+        });
+    });
+    }
+
+    // Inicializar a sidebar do carrinho e o botão de comprar
+    window.onload = function() {
+    // The initialization is handled in the fetch callback above
+    };
+
+  </script>
+</html>

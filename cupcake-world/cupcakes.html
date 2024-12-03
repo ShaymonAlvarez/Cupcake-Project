@@ -1,0 +1,776 @@
+<!DOCTYPE html> 
+<html>
+<head>
+  <title>Cupcake World</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+
+    /* Apply border-box globally for consistent sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Reset default margins and paddings */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* Body setup */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      
+      /* Flexbox for sticky footer */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures full viewport height */
+    }
+
+    .banner {
+      display: flex;
+      justify-content: center;  
+      align-items: center;      
+      height: 50vh;            
+    }
+
+    .banner img {
+      width: 500px;             
+      height: auto;             
+    }
+
+    .header {
+      background-color: #f8c6c6;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .header img {
+      height: 50px;
+      vertical-align: middle;
+    }
+
+    .header .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+      color: #d35d6e;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .header .nav {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .header .nav a {
+      color: #ffffff;
+      background-color: #d35d6e;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 0 5px;
+    }
+
+    .header .nav a:hover {
+      background-color: #c14a5c;
+    }
+
+    .header .icons {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header .icons i {
+      color: #d35d6e;
+      font-size: 24px;
+      margin-left: 15px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .nav a {
+      background-color: #d98e8e;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .nav a:hover {
+      background-color: #c77b7b;
+    }
+
+    .welcome {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .welcome h1 {
+      color: #f57c00;
+      font-size: 36px;
+    }
+
+    .welcome p {
+      color: #e64a19;
+      font-size: 24px;
+    }
+
+    /* Enhanced Products Section */
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      justify-items: center;
+    }
+
+    .product {
+      border: 2px solid #ff9800;
+      padding: 15px;
+      text-align: center;
+      width: 200px;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .product img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin: 10px 0 5px;
+      font-size: 20px;
+      color: #d35d6e;
+    }
+
+    .product p {
+      margin: 0;
+      color: #757575;
+      font-size: 16px;
+    }
+
+    .favorite {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: #fff3e0;
+      flex-wrap: wrap;
+    }
+
+    .favorite .details {
+      max-width: 400px;
+      margin-right: 20px;
+    }
+
+    .favorite .details h2 {
+      color: #e64a19;
+    }
+
+    .favorite .details p {
+      color: #757575;
+    }
+
+    .favorite .details button {
+      background-color: #d32f2f;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .favorite .details button:hover {
+      background-color: #c62828;
+    }
+
+    .favorite img {
+      width: 300px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Standardized Footer Styles */
+    .footer {
+      background-color: #f47c20;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      font-family: 'Roboto', sans-serif;
+      flex-wrap: wrap; /* Ensures responsiveness */
+      margin-top: auto; /* Pushes footer to the bottom */
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer div {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer span {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .footer a i {
+      margin: 0 10px;
+      font-size: 20px;
+    }
+
+    /* Responsive Design Enhancements */
+    @media (max-width: 768px) {
+      .favorite {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .favorite .details {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .favorite img {
+        width: 80%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header .nav {
+        display: none; /* Hide navigation on small screens */
+      }
+
+      .header .icons {
+        right: 10px;
+      }
+
+      .welcome h1 {
+        font-size: 28px;
+      }
+
+      .welcome p {
+        font-size: 20px;
+      }
+
+      .favorite img {
+        width: 100%;
+      }
+
+      .product {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    /* Cart Sidebar Styles */
+    #cart-sidebar {
+      display: none;
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 300px;
+      height: 100%;
+      background-color: #fff;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+      padding: 20px;
+      overflow-y: auto;
+      z-index: 1000;
+    }
+
+    #cart-sidebar button#cart-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .cart-item button.decrease-qty,
+    .cart-item button.increase-qty {
+      background-color: #c82333;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .cart-item button.decrease-qty:hover,
+    .cart-item button.increase-qty:hover {
+      background-color: #a71d2a;
+    }
+
+    .cart-item .item-quantity {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+
+    .remove-item {
+      background-color: #d9534f;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin-top: 10px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .remove-item:hover {
+      background-color: #c9302c;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img alt="Cupcake World Logo" height="50" src="https://storage.googleapis.com/a1aa/image/eSGcc0zU9etBpUeEYIY6GBQsf2cvrdCINZgMtfy6yAVqyrteE.jpg" width="50"/>
+    <span class="logo">
+     Cupcake World
+    </span>
+    <div class="nav">
+        <a href="index.html">Início</a>
+        <a href="cupcakes.html">Cupcakes</a>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="suporte.html">Suporte</a>
+    </div>
+    <div class="icons">
+        <i class="fas fa-shopping-cart" id="cart-button"></i>
+        <a href="perfil.html">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+  </div>
+  <div class="banner">
+    <img alt="Cupcake Store Banner" height="300" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXw5Z5HMcK74UR20akiJuPWzG4zHPlvgeYgXwrNRw3UA9EU2WnmIbujdS7SQiRPipZL4Jtr9a5g9V4caGQ17gxQ1w6TKIgW5BkOk0AZX58kSVwyg6Kss9nLrc9ySqu174nBex7v468foAxNtrXynJkBGXqZmZ1D-jm7Qovzm6UqqB9OZZt9ezsDi5KHO0/w320-h227/Cupcake%20World%20(7).png" width="400"/>
+  </div>
+  
+  <div class="welcome">
+    <h1>
+     Seja bem-vindo,
+    </h1>
+  </div>
+  
+  <div class="products">
+    <!-- Produto 1: Chocolate -->
+    <a href="cupcake_chocolate.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Chocolate Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/Wc4xTodN3oofVyceBeeVJkfsyHwP6rZykO3eeUNNZgxeyFu1TA.jpg" width="200"/>
+        <h3>Chocolate</h3>
+        <p>R$8,50</p>
+      </div>
+    </a>
+    
+    <!-- Produto 2: Baunilha -->
+    <a href="cupcake_baunilha.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Baunilha Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/em4RUg6ScLw8JaCGpQRvrmoGZqBAr2edMNP6ALb6fFomLcrnA.jpg" width="200"/>
+        <h3>Baunilha</h3>
+        <p>R$9,00</p>
+      </div>
+    </a>
+    
+    <!-- Produto 3: Caramelo Salgado -->
+    <a href="cupcake_caramelo_salgado.html" style="text-decoration: none; color: inherit;">
+        <div class="product">
+          <img alt="Caramelo Salgado Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/hkUUvh9ZWb5RFF8Nem3OK2zPwbZ8cSgf3fcj9WV2kewGY4WPB.jpg" width="200"/>
+          <h3>Caramelo Salgado</h3>
+          <p>R$10,00</p>
+        </div>
+    </a>
+
+    <!-- Produto 4: Pistache -->
+    <a href="cupcake_pistache.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Pistache Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/pCJ5nuI2wFINLZeaeNdvRGHKvVdS4fSdtGzAxrebgrNiX4WPB.jpg" width="200"/>
+        <h3>Pistache</h3>
+        <p>R$10,00</p>
+      </div>
+    </a>
+    
+    <!-- Produto 5: Berries -->
+    <a href="cupcake_berries.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Berries Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/B6nORueTe5r0t0imi2wsYEWt3KlLIP1LLytVLbTHmgN2Fu1TA.jpg" width="200"/>
+        <h3>Berries</h3>
+        <p>R$10,00</p>
+      </div>
+    </a>
+    
+    <!-- Produto 6: Chocolate Branco -->
+    <a href="cupcake_chocolate_branco.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Chocolate Branco Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/PbqXu5YmtfyiMSOLY1RUUIweeBWRE0eVrdEzUdkA59dmX4WPB.jpg" width="200"/>
+        <h3>Chocolate Branco</h3>
+        <p>R$8,50</p>
+      </div>
+    </a>
+    
+    <!-- Produto 7: Banana -->
+    <a href="cupcake_banana.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Banana Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/I8kHJCSuHta7NdJ0IW3UzsQHiSB1kHMAPpxki5Mn3gNfC36JA.jpg" width="200"/>
+        <h3>Banana</h3>
+        <p>R$8,50</p>
+      </div>
+    </a>
+    
+    <!-- Produto 8: Limão -->
+    <a href="cupcake_limao.html" style="text-decoration: none; color: inherit;">
+      <div class="product">
+        <img alt="Limão Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/7Id8uv7GOUJVABDfPGhlG6JtzbduIgRoUzKEWGM5kAn9C36JA.jpg" width="200"/>
+        <h3>Limão</h3>
+        <p>R$8,50</p>
+      </div>
+    </a>
+    
+    <!-- Produto 9: Menta com Chocolate -->
+    <a href="cupcake_chocolate_menta.html" style="text-decoration: none; color: inherit;">
+        <div class="product">
+          <img alt="Menta com Chocolate Cupcake" height="200" src="https://storage.googleapis.com/a1aa/image/fCGF5CV7Rdz0bSw7Ab2Dg57qAcuJxR6I1eUjkTKyN9t3Fu1TA.jpg" width="200"/>
+          <h3>Menta com Chocolate</h3>
+          <p>R$10,00</p>
+        </div>
+    </a>
+  </div>
+  
+  <div class="favorite">
+   <div class="details">
+    <h2>FAVORITO DO MÊS</h2>
+    <p>Campeão de vendas, compre já o seu!</p>
+    <h3>RedVelvet</h3>
+    <p>Ingredientes: farinha de trigo, açúcar, ovos, óleo, leite, limão, corante vermelho, cacau em pó, essência de baunilha e fermento.</p>
+    <p>R$9,00</p>
+    <a href="cupcake_red_velvet.html" class="add-to-cart" style="display: inline-block; text-align: center; text-decoration: none;">Acessar</a>
+   </div>
+   <img alt="Red Velvet Cupcake" height="300" src="https://storage.googleapis.com/a1aa/image/70hecbY6bZV3Aizgwl4hxyw0imKKHcfr9YQJWmXyy0QfLcrnA.jpg" width="300"/>
+  </div>
+  
+  <div class="footer">
+    <div>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="perfil.html">Meu perfil</a>
+        <a href="historico.html">Histórico de pedidos</a>
+        <a href="cupcakes.html">Nosso cardápio</a>
+    </div>
+    <div>
+     <span>
+      Siga-nos nas redes sociais!
+     </span>
+     <a href="#">
+      <i class="fab fa-facebook-f"></i>
+     </a>
+     <a href="#">
+      <i class="fab fa-instagram"></i>
+     </a>
+    </div>
+   </div>
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items serão inseridos dinamicamente aqui -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>  
+</body>
+<script>
+    let variantsMapping = {};
+
+    // Fetch the variantsMapping.json file (apenas uma vez)
+    fetch('/variantsMapping.json')
+    .then(response => response.json())
+    .then(data => {
+        variantsMapping = data;
+        console.log('Variants mapping loaded:', variantsMapping);
+        initProductPage();
+        handleBuy();
+    })
+    .catch(error => {
+        console.error('Error loading variants mapping:', error);
+    });
+
+    // Gerenciamento do Carrinho
+    const Cart = {
+    key: 'cartItems',
+    getCart: function() {
+        const cart = localStorage.getItem(this.key);
+        return cart ? JSON.parse(cart) : [];
+    },
+    saveCart: function(cart) {
+        localStorage.setItem(this.key, JSON.stringify(cart));
+    },
+    addItem: function(item) {
+        const cart = this.getCart();
+        // Verificar se o item já existe (mesmo variantId)
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.variantId === item.variantId);
+        if (existingItemIndex !== -1) {
+        // Atualizar quantidade existente
+        cart[existingItemIndex].quantidade += item.quantidade;
+        } else {
+        cart.push(item);
+        }
+        this.saveCart(cart);
+    },
+    removeItem: function(index) {
+        const cart = this.getCart();
+        cart.splice(index, 1);
+        this.saveCart(cart);
+    },
+    clearCart: function() {
+        this.saveCart([]);
+    },
+    updateQuantity: function(index, delta) {
+        const cart = this.getCart();
+        const newQuantity = cart[index].quantidade + delta;
+        if (newQuantity > 0) {
+        cart[index].quantidade = newQuantity;
+        } else {
+        // Remover item se a quantidade for zero ou negativa
+        cart.splice(index, 1);
+        }
+        this.saveCart(cart);
+    }
+    };
+
+    // Função para formatar moeda
+    function formatCurrency(value) {
+    return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    // Função para atualizar o carrinho na sidebar
+    function updateCartSidebar() {
+    const cart = Cart.getCart();
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+
+    // Limpar itens atuais
+    cartItemsContainer.innerHTML = '';
+
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        // Calcular subtotal
+        const subtotal = parseFloat(item.preco) * item.quantidade;
+        total += subtotal;
+
+        itemDiv.innerHTML = `
+        <p><strong>${item.nome}</strong></p>
+        <p>Cobertura: ${item.cobertura}</p>
+        <p>Confeites: ${item.confeite}</p>
+        <p>
+            <button class="decrease-qty" data-index="${index}">-</button>
+            <span class="item-quantity">${item.quantidade}</span>
+            <button class="increase-qty" data-index="${index}">+</button>
+        </p>
+        <p>Subtotal: ${formatCurrency(subtotal.toFixed(2))}</p>
+        <button data-index="${index}" class="remove-item">Remover</button>
+        <hr/>
+        `;
+
+        cartItemsContainer.appendChild(itemDiv);
+    });
+
+    cartTotal.textContent = formatCurrency(total.toFixed(2));
+
+    // Adicionar event listeners para remover itens
+    const removeButtons = document.querySelectorAll('.remove-item');
+    removeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.removeItem(index);
+        updateCartSidebar();
+        });
+    });
+
+    // Adicionar event listeners para aumentar quantidade
+    const increaseButtons = document.querySelectorAll('.increase-qty');
+    increaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.updateQuantity(index, 1);
+        updateCartSidebar();
+        });
+    });
+
+    // Adicionar event listeners para diminuir quantidade
+    const decreaseButtons = document.querySelectorAll('.decrease-qty');
+    decreaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+        const index = this.getAttribute('data-index');
+        Cart.updateQuantity(index, -1);
+        updateCartSidebar();
+        });
+    });
+    }
+
+    // Função para mostrar a sidebar do carrinho
+    function showCartSidebar() {
+    document.getElementById('cart-sidebar').style.display = 'block';
+    }
+
+    // Função para esconder a sidebar do carrinho
+    function hideCartSidebar() {
+    document.getElementById('cart-sidebar').style.display = 'none';
+    }
+
+    // Função para lidar com o clique no botão "Adicionar ao carrinho"
+    function handleAddToCart(product) {
+    const addToCartBtn = product.querySelector('.add-to-cart');
+
+    addToCartBtn.addEventListener('click', function() {
+        const nome = product.querySelector('h3').textContent.trim();
+        const precoText = product.querySelector('.price') ? product.querySelector('.price').textContent : product.querySelector('p').textContent;
+        let preco = 0;
+        if (precoText.includes('Preço: R$ ')) {
+        preco = precoText.replace('Preço: R$ ', '').replace(',', '.');
+        } else {
+        preco = precoText.replace('R$', '').replace(',', '.');
+        }
+
+        const cobertura = product.querySelector('input[name="cobertura"]:checked')?.value.trim() || '';
+        const confeite = product.querySelector('input[name="confeite"]:checked')?.value.trim() || '';
+
+        // Obter o nome do produto
+        const productName = product.getAttribute('data-product-name') || nome;
+
+        // Determinar o variantId com base no nome do produto, cobertura e confeite
+        const key = `${productName}|${cobertura}|${confeite}`;
+        const variantId = variantsMapping[key];
+
+        if (!variantId) {
+        alert('Selecione uma combinação válida de cobertura e confeite.');
+        return;
+        }
+
+        const quantidade = 1; // Quantidade inicial
+
+        const item = {
+        nome,
+        preco,
+        cobertura,
+        confeite,
+        variantId,
+        quantidade
+        };
+
+        Cart.addItem(item);
+        updateCartSidebar();
+        showCartSidebar();
+    });
+    }
+
+    // Função para inicializar a página de produto
+    function initProductPage() {
+    const products = document.querySelectorAll('.product');
+    products.forEach(product => handleAddToCart(product));
+
+    // Inicializar a sidebar do carrinho
+    updateCartSidebar();
+
+    // Event listeners para fechar a sidebar do carrinho
+    document.getElementById('cart-close').addEventListener('click', hideCartSidebar);
+
+    // Event listener para abrir a sidebar do carrinho
+    document.getElementById('cart-button').addEventListener('click', showCartSidebar);
+    }
+
+    // Função para lidar com o clique no botão "Comprar"
+    function handleBuy() {
+    const buyButton = document.getElementById('buy-button');
+    buyButton.addEventListener('click', function() {
+        const cart = Cart.getCart();
+
+        if (cart.length === 0) {
+        alert('Seu carrinho está vazio.');
+        return;
+        }
+
+        // Enviar dados do carrinho para o servidor
+        fetch('/create-order', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        body: JSON.stringify({ cart })
+        })
+        .then(async response => {
+        const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || 'Erro desconhecido.');
+        }
+        return result;
+        })
+        .then(result => {
+        if (result.success) {
+            // Limpar o carrinho
+            Cart.clearCart();
+            updateCartSidebar();
+
+            // Redirecionar para a URL de checkout do Shopify
+            window.location.href = result.checkoutUrl;
+        }
+        })
+        .catch(error => {
+            console.error('Error creating order:', error);
+            // Verifique se o objeto de erro possui uma mensagem
+            const errorMessage = error.message || 'Erro desconhecido.';
+            alert(`Erro ao criar o pedido: ${errorMessage}`);
+        });
+    });
+    }
+
+    // Inicializar a sidebar do carrinho e o botão de comprar
+    window.onload = function() {
+    // The initialization is handled in the fetch callback above
+    };
+</script>
+</html>

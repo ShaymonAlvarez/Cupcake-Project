@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Suporte ao Cliente - Cupcake World</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* Apply border-box globally for consistent sizing */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    /* Reset default margins and paddings */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    /* Body setup */
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures full viewport height */
+    }
+
+    /* Header Styles */
+    .header {
+      background-color: #f8c6c6;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .header img {
+      height: 50px;
+      vertical-align: middle;
+    }
+
+    .header .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+      color: #d35d6e;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+    }
+
+    .header .nav {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .header .nav a {
+      color: #ffffff;
+      background-color: #d35d6e;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 0 5px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .header .nav a:hover {
+      background-color: #c7436b;
+    }
+
+    .header .icons {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header .icons i {
+      color: #d35d6e;
+      font-size: 24px;
+      margin-left: 15px;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .header .icons i:hover {
+      color: #b04a58;
+    }
+
+    /* Main Container */
+    .container {
+      flex: 1; /* Allows the container to take up all available vertical space */
+      max-width: 600px; /* Reduced from 800px to 600px for better readability */
+      width: 90%;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9; /* Optional: Adds a subtle background for better contrast */
+      border-radius: 8px; /* Optional: Adds rounded corners for a smoother look */
+      box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Adds a light shadow for depth */
+    }
+
+    /* Page Titles */
+    h1 {
+      color: #d32f2f;
+      text-align: center;
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #f57c00;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      color: #d32f2f;
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+
+    /* Section Styling */
+    .section {
+      margin-bottom: 40px;
+    }
+
+    /* Contact Section Styling */
+    .contact-section {
+      text-align: center;
+    }
+
+    /* Checkbox Group */
+    .checkbox-group {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 10px;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #fff; /* Optional: Adds background to checkboxes */
+      padding: 8px 12px; /* Optional: Adds padding for better click area */
+      border: 1px solid #ccc; /* Optional: Adds border to checkbox labels */
+      border-radius: 4px; /* Optional: Rounded corners */
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .checkbox-group label:hover {
+      background-color: #f1f1f1;
+      border-color: #d35d6e;
+    }
+
+    .checkbox-group input {
+      margin-right: 10px;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Roboto', sans-serif;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #d32f2f;
+      outline: none;
+    }
+
+    .form-group textarea {
+      height: 120px;
+      resize: vertical;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      background-color: #d32f2f;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+      font-size: 18px;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #c9302c;
+    }
+
+    /* Contact Info */
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .contact-info div {
+      flex: 1 1 250px;
+    }
+
+    .contact-info h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .contact-info p {
+      font-size: 16px;
+      color: #555;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #f47c20;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      font-family: 'Roboto', sans-serif;
+      flex-wrap: wrap; /* Ensures responsiveness */
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+      transition: text-decoration 0.3s ease;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer div {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer span {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .footer a i {
+      margin: 0 10px;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+
+    .footer a i:hover {
+      color: #ccc;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+      .footer {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .footer div {
+        margin-top: 10px;
+      }
+
+      .container {
+        width: 95%;
+        margin: 30px auto;
+      }
+
+      .contact-info {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      h3 {
+        font-size: 18px;
+      }
+
+      .checkbox-group {
+        grid-template-columns: 1fr;
+      }
+    }
+
+        /* Cart Sidebar Styles */
+        #cart-sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+        }
+
+        #cart-sidebar button#cart-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        }
+
+        .cart-item button.decrease-qty,
+        .cart-item button.increase-qty {
+        background-color: #c82333;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin: 0 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .cart-item button.decrease-qty:hover,
+        .cart-item button.increase-qty:hover {
+        background-color: #a71d2a;
+        }
+
+        .cart-item .item-quantity {
+        font-size: 16px;
+        margin: 0 5px;
+        }
+
+        .remove-item {
+        background-color: #d9534f;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin-top: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .remove-item:hover {
+        background-color: #c9302c;
+        }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <img alt="Cupcake World Logo" src="https://storage.googleapis.com/a1aa/image/eSGcc0zU9etBpUeEYIY6GBQsf2cvrdCINZgMtfy6yAVqyrteE.jpg" width="50" height="50"/>
+    <span class="logo">Cupcake World</span>
+    <div class="nav">
+        <a href="index.html">Início</a>
+        <a href="cupcakes.html">Cupcakes</a>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="suporte.html">Suporte</a>
+    </div>
+    <div class="icons">
+        <i class="fas fa-shopping-cart" id="cart-button"></i>
+      <a href="perfil.html">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <div class="container">
+    <h1>SUPORTE AO CLIENTE</h1>
+
+    <!-- Support Form -->
+    <form id="supportForm">
+      <!-- Section 1: Help Options -->
+      <div class="section">
+        <h2>Como podemos te ajudar?</h2>
+        <p>Selecione abaixo o acontecido:</p>
+        <div class="checkbox-group">
+            <label>
+                <input type="checkbox" name="motivo[]" value="Pedido errado" />
+                Meu pedido veio errado
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Elogio" />
+                Quero fazer um elogio
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Pedido violado" />
+                Meu pedido foi aberto/violado
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Sugestão" />
+                Quero enviar uma sugestão
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Entrega não realizada" />
+                O motoboy não entregou meu pedido
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Reclamação" />
+                Quero fazer uma reclamação
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Problema de qualidade" />
+                Problemas com a qualidade do pedido
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Redefinição de senha" />
+                Problemas de redefinição de senha
+              </label>
+              <label>
+                <input type="checkbox" name="motivo[]" value="Reembolso/Cancelamento" />
+                Reembolso/Cancelamento de pedido
+              </label>
+        </div>
+      </div>
+
+      <!-- Section 2: Fill in Your Details -->
+      <div class="section">
+        <h3>Preencha seus dados</h3>
+        <p>O nosso time entrará em contato o mais rápido possível!</p>
+        <div class="form-group">
+          <input placeholder="Nome Completo" type="text" name="nome" aria-label="Nome Completo" required/>
+        </div>
+        <div class="form-group">
+          <input placeholder="E-mail" type="email" name="email" aria-label="E-mail" required/>
+        </div>
+        <div class="form-group">
+          <input placeholder="Celular" type="text" name="telefone" aria-label="Celular" required/>
+        </div>
+        <div class="form-group">
+          <textarea placeholder="Mensagem" name="mensagem" aria-label="Mensagem" required></textarea>
+        </div>
+        <!-- Success and error messages -->
+        <p id="success-message" style="color: green; display: none;"></p>
+        <p id="error-message" style="color: red; display: none;"></p>
+        <button class="btn-submit" type="submit">Enviar</button>
+      </div>
+    </form>
+
+    <!-- Section 3: Contact Us -->
+    <div class="section contact-section">
+      <h2>Precisa falar com a gente?</h2>
+      <p>Entre em contato através de nosso endereço ou redes sociais:</p>
+      <div class="contact-info">
+        <div>
+          <h3>Endereço 1</h3>
+          <p>
+            Avenida Paulista 1256, Bela Vista - São Paulo, SP<br/>
+            CEP: 01310-100
+          </p>
+        </div>
+        <div>
+          <h3>WhatsApp</h3>
+          <p>(11) 94002-8922</p>
+          <h3>E-mail</h3>
+          <p>cup.word@gmail.com</p>
+        </div>
+        <div>
+          <h3>Mídias sociais</h3>
+          <p>
+            Instagram: @cupworld<br/>
+            Facebook: Cupcake World
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <div>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="perfil.html">Meu perfil</a>
+        <a href="historico.html">Histórico de pedidos</a>
+        <a href="cupcakes.html">Nosso cardápio</a>
+    </div>
+    <div>
+      <span>Siga-nos nas redes sociais!</span>
+      <a href="#"><i class="fab fa-facebook-f" title="Facebook"></i></a>
+      <a href="#"><i class="fab fa-instagram" title="Instagram"></i></a>
+    </div>
+  </div>
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items serão inseridos dinamicamente aqui -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>  
+</body>
+<script>
+    // Declare a global variable to store user data
+    let userData = null;
+
+    let variantsMapping = {};
+
+    // Cart Management Object
+    const Cart = {
+        key: 'cartItems',
+        getCart: function() {
+            const cart = localStorage.getItem(this.key);
+            return cart ? JSON.parse(cart) : [];
+        },
+        saveCart: function(cart) {
+            localStorage.setItem(this.key, JSON.stringify(cart));
+        },
+        addItem: function(item) {
+            const cart = this.getCart();
+            // Check if the item already exists (same variantId)
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.variantId === item.variantId);
+            if (existingItemIndex !== -1) {
+                // Update existing quantity
+                cart[existingItemIndex].quantidade += item.quantidade;
+            } else {
+                cart.push(item);
+            }
+            this.saveCart(cart);
+        },
+        removeItem: function(index) {
+            const cart = this.getCart();
+            cart.splice(index, 1);
+            this.saveCart(cart);
+        },
+        clearCart: function() {
+            this.saveCart([]);
+        },
+        updateQuantity: function(index, delta) {
+            const cart = this.getCart();
+            const newQuantity = cart[index].quantidade + delta;
+            if (newQuantity > 0) {
+                cart[index].quantidade = newQuantity;
+            } else {
+                // Remove item if quantity is zero or negative
+                cart.splice(index, 1);
+            }
+            this.saveCart(cart);
+        }
+    };
+
+    // Function to format currency
+    function formatCurrency(value) {
+        return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    // Function to update the cart sidebar
+    function updateCartSidebar() {
+        const cart = Cart.getCart();
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+
+        // Clear current items
+        cartItemsContainer.innerHTML = '';
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+
+            // Calculate subtotal
+            const subtotal = parseFloat(item.preco) * item.quantidade;
+            total += subtotal;
+
+            itemDiv.innerHTML = `
+                <p><strong>${item.nome}</strong></p>
+                <p>Cobertura: ${item.cobertura}</p>
+                <p>Confeites: ${item.confeite}</p>
+                <p>
+                    <button class="decrease-qty" data-index="${index}">-</button>
+                    <span class="item-quantity">${item.quantidade}</span>
+                    <button class="increase-qty" data-index="${index}">+</button>
+                </p>
+                <p>Subtotal: ${formatCurrency(subtotal.toFixed(2))}</p>
+                <button data-index="${index}" class="remove-item">Remover</button>
+                <hr/>
+            `;
+
+            cartItemsContainer.appendChild(itemDiv);
+        });
+
+        cartTotal.textContent = formatCurrency(total.toFixed(2));
+
+        // Add event listeners to remove items
+        const removeButtons = document.querySelectorAll('.remove-item');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.removeItem(index);
+                updateCartSidebar();
+            });
+        });
+
+        // Add event listeners to increase quantity
+        const increaseButtons = document.querySelectorAll('.increase-qty');
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.updateQuantity(index, 1);
+                updateCartSidebar();
+            });
+        });
+
+        // Add event listeners to decrease quantity
+        const decreaseButtons = document.querySelectorAll('.decrease-qty');
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.updateQuantity(index, -1);
+                updateCartSidebar();
+            });
+        });
+    }
+
+    // Function to show the cart sidebar
+    function showCartSidebar() {
+        document.getElementById('cart-sidebar').style.display = 'block';
+    }
+
+    // Function to hide the cart sidebar
+    function hideCartSidebar() {
+        document.getElementById('cart-sidebar').style.display = 'none';
+    }
+
+    // Function to handle "Add to cart" button click
+    function handleAddToCart(product) {
+        const addToCartBtn = product.querySelector('.add-to-cart');
+
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                const nome = product.querySelector('h3').textContent.trim();
+                const precoText = product.querySelector('.price') ? product.querySelector('.price').textContent : product.querySelector('p').textContent;
+                let preco = 0;
+                if (precoText.includes('Preço: R$ ')) {
+                    preco = precoText.replace('Preço: R$ ', '').replace(',', '.');
+                } else {
+                    preco = precoText.replace('R$', '').replace(',', '.');
+                }
+
+                const cobertura = product.querySelector('input[name="cobertura"]:checked')?.value.trim() || '';
+                const confeite = product.querySelector('input[name="confeite"]:checked')?.value.trim() || '';
+
+                // Get the product name
+                const productName = product.getAttribute('data-product-name') || nome;
+
+                // Determine variantId based on product name, cobertura, and confeite
+                const key = `${productName}|${cobertura}|${confeite}`;
+                const variantId = variantsMapping[key];
+
+                if (!variantId) {
+                    alert('Selecione uma combinação válida de cobertura e confeite.');
+                    return;
+                }
+
+                const quantidade = 1; // Initial quantity
+
+                const item = {
+                    nome,
+                    preco,
+                    cobertura,
+                    confeite,
+                    variantId,
+                    quantidade
+                };
+
+                Cart.addItem(item);
+                updateCartSidebar();
+                showCartSidebar();
+            });
+        }
+    }
+
+    // Function to initialize the product page
+    function initProductPage() {
+        const products = document.querySelectorAll('.product-item');
+        products.forEach(product => handleAddToCart(product));
+
+        // Initialize the cart sidebar
+        updateCartSidebar();
+
+        // Event listeners to close the cart sidebar
+        const cartCloseButton = document.getElementById('cart-close');
+        if (cartCloseButton) {
+            cartCloseButton.addEventListener('click', hideCartSidebar);
+        }
+
+        // Event listener to open the cart sidebar
+        const cartButton = document.getElementById('cart-button');
+        if (cartButton) {
+            cartButton.addEventListener('click', showCartSidebar);
+        }
+    }
+
+    // Function to handle "Buy" button click
+    function handleBuy() {
+        const buyButton = document.getElementById('buy-button');
+        if (buyButton) {
+            buyButton.addEventListener('click', function() {
+                const cart = Cart.getCart();
+
+                if (cart.length === 0) {
+                    alert('Seu carrinho está vazio.');
+                    return;
+                }
+
+                // Send cart data to the server
+                fetch('/create-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ cart })
+                })
+                .then(async response => {
+                    const result = await response.json();
+                    if (!response.ok) {
+                        throw new Error(result.message || 'Erro desconhecido.');
+                    }
+                    return result;
+                })
+                .then(result => {
+                    if (result.success) {
+                        // Clear the cart
+                        Cart.clearCart();
+                        updateCartSidebar();
+
+                        // Redirect to Shopify checkout URL
+                        window.location.href = result.checkoutUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error creating order:', error);
+                    const errorMessage = error.message || 'Erro desconhecido.';
+                    alert(`Erro ao criar o pedido: ${errorMessage}`);
+                });
+            });
+        }
+    }
+
+    // Handle form submission via AJAX
+    function handleSupportFormSubmission() {
+        document.getElementById('supportForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Collect form data
+            const formData = new FormData(this);
+
+            // Convert FormData to JSON object
+            const data = {};
+            formData.forEach((value, key) => {
+                // Handle multiple checkbox values
+                if (key.endsWith('[]')) {
+                    key = key.slice(0, -2); // Remove '[]' from key
+                    if (!data[key]) {
+                        data[key] = [];
+                    }
+                    data[key].push(value);
+                } else {
+                    data[key] = value;
+                }
+            });
+
+            // Send data to the server
+            fetch('/suporte', { // Use relative URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify(data)
+            })
+            .then(async response => {
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.message || 'Erro desconhecido.');
+                }
+                return result;
+            })
+            .then(result => {
+                const successMessage = document.getElementById('success-message');
+                const errorMessage = document.getElementById('error-message');
+
+                // Clear previous messages
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                if (result.success) {
+                    // Display success message
+                    successMessage.textContent = result.message;
+                    successMessage.style.display = 'block';
+
+                    // Reset the form
+                    document.getElementById('supportForm').reset();
+
+                    // If fields were disabled, re-fill them with userData and re-disable
+                    if (document.querySelector('input[name="nome"]').disabled) {
+                        if (userData) {
+                            document.querySelector('input[name="nome"]').value = userData.nome;
+                            document.querySelector('input[name="email"]').value = userData.email;
+                            document.querySelector('input[name="telefone"]').value = userData.telefone;
+                        }
+
+                        document.querySelector('input[name="nome"]').disabled = true;
+                        document.querySelector('input[name="email"]').disabled = true;
+                        document.querySelector('input[name="telefone"]').disabled = true;
+                    }
+                } else {
+                    // Display error message with details
+                    errorMessage.textContent = result.message + (result.error && result.error.message ? ' Detalhes: ' + result.error.message : '');
+                    errorMessage.style.display = 'block';
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting support request:', error);
+                const errorMessage = document.getElementById('error-message');
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+            });
+        });
+    }
+
+    // Function to load variants mapping
+    function loadVariantsMapping() {
+        return fetch('/variantsMapping.json')
+            .then(response => response.json())
+            .then(data => {
+                variantsMapping = data;
+                console.log('Variants mapping loaded:', variantsMapping);
+            })
+            .catch(error => {
+                console.error('Error loading variants mapping:', error);
+            });
+    }
+
+    // Initialize everything when the page loads
+    window.onload = function() {
+        // Fetch user data and pre-fill form fields
+        fetch('/user-data', { credentials: 'include' })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    userData = data.data; // Store user data globally
+
+                    // Pre-fill form fields with user data
+                    document.querySelector('input[name="nome"]').value = userData.nome;
+                    document.querySelector('input[name="email"]').value = userData.email;
+                    document.querySelector('input[name="telefone"]').value = userData.telefone;
+
+                    // Disable fields to prevent editing
+                    document.querySelector('input[name="nome"]').disabled = true;
+                    document.querySelector('input[name="email"]').disabled = true;
+                    document.querySelector('input[name="telefone"]').disabled = true;
+
+                    // Remove 'required' attribute since fields are already filled
+                    document.querySelector('input[name="nome"]').removeAttribute('required');
+                    document.querySelector('input[name="email"]').removeAttribute('required');
+                    document.querySelector('input[name="telefone"]').removeAttribute('required');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching user data:', error);
+                // If error occurs, the user is likely not logged in; proceed without pre-filling
+            })
+            .finally(() => {
+                loadVariantsMapping()
+                    .then(() => {
+                        initProductPage();
+                        handleBuy();
+                        handleSupportFormSubmission();
+                    })
+                    .catch(error => {
+                        console.error('Error during initialization:', error);
+                    });
+            });
+    };
+</script>
+</html>

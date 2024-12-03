@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Histórico de Pedidos - Cupcake World</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header Styles */
+    .header {
+      background-color: #f8c6c6;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .header img {
+      height: 50px;
+      vertical-align: middle;
+    }
+
+    .header .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+      color: #d35d6e;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .header .nav {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .header .nav a {
+      color: #ffffff;
+      background-color: #d35d6e;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 0 5px;
+      transition: background-color 0.3s;
+    }
+
+    .header .nav a:hover {
+      background-color: #c14a5c;
+    }
+
+    .header .icons {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header .icons i {
+      color: #d35d6e;
+      font-size: 24px;
+      margin-left: 15px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .header .icons i:hover {
+      color: #c14a5c;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .main-content h1 {
+      color: #ff6600;
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    /* Search Bar Styles */
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .search-bar input {
+      width: 50%;
+      max-width: 400px;
+      padding: 10px;
+      border: 1px solid #000;
+      border-radius: 5px 0 0 5px;
+      font-size: 16px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      border: 1px solid #000;
+      border-left: none;
+      border-radius: 0 5px 5px 0;
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* Table Styles */
+    .table-container {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+
+    table {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-collapse: collapse;
+      min-width: 600px; /* Ensures readability */
+    }
+
+    table, th, td {
+      border: 1px solid #000;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    /* Highlighted Row */
+    tr.selected {
+      background-color: #ffeb3b;
+    }
+
+    /* Order Details Styles */
+    .order-details {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px solid #ff9800;
+      border-radius: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-details h2 {
+      color: #ff6600;
+      margin-bottom: 15px;
+      font-size: 24px;
+    }
+
+    .order-details p {
+      margin: 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .order-details h3 {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #d35d6e;
+    }
+
+    /* Footer Styles */
+    .footer {
+      background-color: #f47c20;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      font-family: 'Roboto', sans-serif;
+      flex-wrap: wrap; /* Ensures responsiveness */
+      margin-top: auto; /* Pushes footer to the bottom */
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer div {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer span {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .footer a i {
+      margin: 0 10px;
+      font-size: 20px;
+    }
+
+    /* Responsive Design Enhancements */
+    @media (max-width: 768px) {
+      .search-bar input {
+        width: 70%;
+      }
+
+      table {
+        min-width: 500px;
+      }
+
+      .order-details {
+        padding: 15px;
+      }
+
+      .order-details h2 {
+        font-size: 20px;
+      }
+
+      .order-details p {
+        font-size: 14px;
+      }
+
+      .product {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header .nav {
+        display: none; /* Hide navigation on small screens */
+      }
+
+      .header .icons {
+        right: 10px;
+      }
+
+      .main-content h1 {
+        font-size: 28px;
+      }
+
+      .search-bar input {
+        width: 80%;
+      }
+
+      table {
+        min-width: 300px;
+      }
+
+      .order-details {
+        padding: 10px;
+      }
+
+      .order-details h2 {
+        font-size: 18px;
+      }
+
+      .order-details p {
+        font-size: 14px;
+      }
+
+      .product {
+        max-width: 100%;
+      }
+    }
+        /* Cart Sidebar Styles */
+        #cart-sidebar {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background-color: #fff;
+        box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+        }
+
+        #cart-sidebar button#cart-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        }
+
+        .cart-item button.decrease-qty,
+        .cart-item button.increase-qty {
+        background-color: #c82333;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin: 0 5px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .cart-item button.decrease-qty:hover,
+        .cart-item button.increase-qty:hover {
+        background-color: #a71d2a;
+        }
+
+        .cart-item .item-quantity {
+        font-size: 16px;
+        margin: 0 5px;
+        }
+
+        .remove-item {
+        background-color: #d9534f;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        margin-top: 10px;
+        border-radius: 3px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        }
+
+        .remove-item:hover {
+        background-color: #c9302c;
+        }
+
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <img alt="Cupcake World Logo" height="50" src="https://storage.googleapis.com/a1aa/image/eSGcc0zU9etBpUeEYIY6GBQsf2cvrdCINZgMtfy6yAVqyrteE.jpg" width="50"/>
+    <span class="logo">Cupcake World</span>
+    <div class="nav">
+        <a href="index.html">Início</a>
+        <a href="cupcakes.html">Cupcakes</a>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="suporte.html">Suporte</a>
+    </div>
+    <div class="icons">
+        <i class="fas fa-shopping-cart" id="cart-button"></i>
+        <a href="perfil.html">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content Section -->
+  <div class="main-content">
+    <h1>HISTÓRICO DE PEDIDOS</h1>
+    
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input id="search-input" placeholder="Procurar por pedidos..." type="text"/>
+      <button id="search-button">Pesquisar</button>
+    </div>
+    
+    <!-- Table Container -->
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Número do pedido</th>
+            <th>Data</th>
+            <th>Horário</th>
+            <th>Nome cupcake</th>
+            <th>Quantidade</th>
+            <th>Valor total</th>
+          </tr>
+        </thead>
+        <tbody id="orders-table-body">
+          <!-- Dynamic Rows Inserted Here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Order Details -->
+    <div class="order-details" id="order-details">
+      <h2>Detalhes do Pedido</h2>
+      <p><strong>Número do pedido:</strong> <span id="detalhes-numero"></span></p>
+      <p><strong>Data:</strong> <span id="detalhes-data"></span></p>
+      <p><strong>Horário:</strong> <span id="detalhes-horario"></span></p>
+      <div id="detalhes-itens">
+        <!-- Dynamic Order Items Inserted Here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <div>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="perfil.html">Meu perfil</a>
+        <a href="historico.html">Histórico de pedidos</a>
+        <a href="cupcakes.html">Nosso cardápio</a>
+    </div>
+    <div>
+      <span>Siga-nos nas redes sociais!</span>
+      <a href="#">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="#">
+        <i class="fab fa-instagram"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items will be dynamically inserted here -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>
+<!-- Cart Sidebar -->
+<div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items serão inseridos dinamicamente aqui -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>
+  
+</body>
+<script>
+    let variantsMapping = {};
+
+    // Cart Management Object
+    const Cart = {
+        key: 'cartItems',
+        getCart: function() {
+            const cart = localStorage.getItem(this.key);
+            return cart ? JSON.parse(cart) : [];
+        },
+        saveCart: function(cart) {
+            localStorage.setItem(this.key, JSON.stringify(cart));
+        },
+        addItem: function(item) {
+            const cart = this.getCart();
+            // Check if the item already exists (same variantId)
+            const existingItemIndex = cart.findIndex(cartItem => cartItem.variantId === item.variantId);
+            if (existingItemIndex !== -1) {
+                // Update existing quantity
+                cart[existingItemIndex].quantidade += item.quantidade;
+            } else {
+                cart.push(item);
+            }
+            this.saveCart(cart);
+        },
+        removeItem: function(index) {
+            const cart = this.getCart();
+            cart.splice(index, 1);
+            this.saveCart(cart);
+        },
+        clearCart: function() {
+            this.saveCart([]);
+        },
+        updateQuantity: function(index, delta) {
+            const cart = this.getCart();
+            const newQuantity = cart[index].quantidade + delta;
+            if (newQuantity > 0) {
+                cart[index].quantidade = newQuantity;
+            } else {
+                // Remove item if quantity is zero or negative
+                cart.splice(index, 1);
+            }
+            this.saveCart(cart);
+        }
+    };
+
+    // Function to format currency
+    function formatCurrency(value) {
+        return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    // Function to update the cart sidebar
+    function updateCartSidebar() {
+        const cart = Cart.getCart();
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+
+        // Clear current items
+        cartItemsContainer.innerHTML = '';
+
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.classList.add('cart-item');
+
+            // Calculate subtotal
+            const subtotal = parseFloat(item.preco) * item.quantidade;
+            total += subtotal;
+
+            itemDiv.innerHTML = `
+                <p><strong>${item.nome}</strong></p>
+                <p>Cobertura: ${item.cobertura}</p>
+                <p>Confeites: ${item.confeite}</p>
+                <p>
+                    <button class="decrease-qty" data-index="${index}">-</button>
+                    <span class="item-quantity">${item.quantidade}</span>
+                    <button class="increase-qty" data-index="${index}">+</button>
+                </p>
+                <p>Subtotal: ${formatCurrency(subtotal.toFixed(2))}</p>
+                <button data-index="${index}" class="remove-item">Remover</button>
+                <hr/>
+            `;
+
+            cartItemsContainer.appendChild(itemDiv);
+        });
+
+        cartTotal.textContent = formatCurrency(total.toFixed(2));
+
+        // Add event listeners to remove items
+        const removeButtons = document.querySelectorAll('.remove-item');
+        removeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.removeItem(index);
+                updateCartSidebar();
+            });
+        });
+
+        // Add event listeners to increase quantity
+        const increaseButtons = document.querySelectorAll('.increase-qty');
+        increaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.updateQuantity(index, 1);
+                updateCartSidebar();
+            });
+        });
+
+        // Add event listeners to decrease quantity
+        const decreaseButtons = document.querySelectorAll('.decrease-qty');
+        decreaseButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const index = this.getAttribute('data-index');
+                Cart.updateQuantity(index, -1);
+                updateCartSidebar();
+            });
+        });
+    }
+
+    // Function to show the cart sidebar
+    function showCartSidebar() {
+        document.getElementById('cart-sidebar').style.display = 'block';
+    }
+
+    // Function to hide the cart sidebar
+    function hideCartSidebar() {
+        document.getElementById('cart-sidebar').style.display = 'none';
+    }
+
+    // Function to handle "Add to cart" button click
+    function handleAddToCart(product) {
+        const addToCartBtn = product.querySelector('.add-to-cart');
+
+        if (addToCartBtn) {
+            addToCartBtn.addEventListener('click', function() {
+                const nome = product.querySelector('h3').textContent.trim();
+                const precoText = product.querySelector('.price') ? product.querySelector('.price').textContent : product.querySelector('p').textContent;
+                let preco = 0;
+                if (precoText.includes('Preço: R$ ')) {
+                    preco = precoText.replace('Preço: R$ ', '').replace(',', '.');
+                } else {
+                    preco = precoText.replace('R$', '').replace(',', '.');
+                }
+
+                const cobertura = product.querySelector('input[name="cobertura"]:checked')?.value.trim() || '';
+                const confeite = product.querySelector('input[name="confeite"]:checked')?.value.trim() || '';
+
+                // Get the product name
+                const productName = product.getAttribute('data-product-name') || nome;
+
+                // Determine variantId based on product name, cobertura, and confeite
+                const key = `${productName}|${cobertura}|${confeite}`;
+                const variantId = variantsMapping[key];
+
+                if (!variantId) {
+                    alert('Selecione uma combinação válida de cobertura e confeite.');
+                    return;
+                }
+
+                const quantidade = 1; // Initial quantity
+
+                const item = {
+                    nome,
+                    preco,
+                    cobertura,
+                    confeite,
+                    variantId,
+                    quantidade
+                };
+
+                Cart.addItem(item);
+                updateCartSidebar();
+                showCartSidebar();
+            });
+        }
+    }
+
+    // Function to initialize the product page
+    function initProductPage() {
+        const products = document.querySelectorAll('.product-item');
+        products.forEach(product => handleAddToCart(product));
+
+        // Initialize the cart sidebar
+        updateCartSidebar();
+
+        // Event listeners to close the cart sidebar
+        const cartCloseButton = document.getElementById('cart-close');
+        if (cartCloseButton) {
+            cartCloseButton.addEventListener('click', hideCartSidebar);
+        }
+
+        // Event listener to open the cart sidebar
+        const cartButton = document.getElementById('cart-button');
+        if (cartButton) {
+            cartButton.addEventListener('click', showCartSidebar);
+        }
+    }
+
+    // Function to handle "Buy" button click
+    function handleBuy() {
+        const buyButton = document.getElementById('buy-button');
+        if (buyButton) {
+            buyButton.addEventListener('click', function() {
+                const cart = Cart.getCart();
+
+                if (cart.length === 0) {
+                    alert('Seu carrinho está vazio.');
+                    return;
+                }
+
+                // Send cart data to the server
+                fetch('/create-order', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({ cart })
+                })
+                .then(async response => {
+                    const result = await response.json();
+                    if (!response.ok) {
+                        throw new Error(result.message || 'Erro desconhecido.');
+                    }
+                    return result;
+                })
+                .then(result => {
+                    if (result.success) {
+                        // Clear the cart
+                        Cart.clearCart();
+                        updateCartSidebar();
+
+                        // Redirect to Shopify checkout URL
+                        window.location.href = result.checkoutUrl;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error creating order:', error);
+                    // Check if the error object has a message
+                    const errorMessage = error.message || 'Erro desconhecido.';
+                    alert(`Erro ao criar o pedido: ${errorMessage}`);
+                });
+            });
+        }
+    }
+
+    // Function to fetch and display orders
+    function fetchOrders() {
+        console.log('fetchOrders() foi chamado');
+        fetch('/get-orders', { credentials: 'include' }) // Include credentials
+            .then(async response => {
+                if (response.status === 401) {
+                    // User not authenticated, redirect to login page
+                    window.location.href = 'login.html';
+                    return;
+                }
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.message || 'Erro ao buscar pedidos.');
+                }
+                return result;
+            })
+            .then(result => {
+                if (!result) return; // If user is redirected
+                const orders = result.orders;
+                const tableBody = document.getElementById('orders-table-body');
+                tableBody.innerHTML = '';
+
+                orders.forEach(order => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${order.id_pedido}</td>
+                        <td>${new Date(order.data_pedido).toLocaleDateString()}</td>
+                        <td>${new Date(order.data_pedido).toLocaleTimeString()}</td>
+                        <td>${order.itens_do_pedido.map(item => item.nome_produto).join(', ')}</td>
+                        <td>${order.itens_do_pedido.map(item => item.quantidade).join(', ')}</td>
+                        <td>${formatCurrency(order.total_pedido)}</td>
+                    `;
+                    tr.addEventListener('click', () => showOrderDetails(order, tr));
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching orders:', error);
+                alert('Erro ao buscar pedidos. Por favor, tente novamente.');
+            });
+    }
+
+    // Function to show order details
+    function showOrderDetails(order, selectedRow) {
+        // Remove 'selected' class from all rows
+        const allRows = document.querySelectorAll('#orders-table-body tr');
+        allRows.forEach(row => row.classList.remove('selected'));
+        
+        // Add 'selected' class to the clicked row
+        selectedRow.classList.add('selected');
+
+        const detailsDiv = document.getElementById('order-details');
+        document.getElementById('detalhes-numero').textContent = order.id_pedido;
+        document.getElementById('detalhes-data').textContent = new Date(order.data_pedido).toLocaleDateString();
+        document.getElementById('detalhes-horario').textContent = new Date(order.data_pedido).toLocaleTimeString();
+    
+        const itensDiv = document.getElementById('detalhes-itens');
+        itensDiv.innerHTML = '<h3>Itens do pedido:</h3>';
+    
+        if (order.itens_do_pedido.length === 0) {
+            itensDiv.innerHTML += '<p>Nenhum item encontrado.</p>';
+        } else {
+            order.itens_do_pedido.forEach(item => {
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>${item.nome_produto}</strong> - Quantidade: ${item.quantidade} - Subtotal: ${formatCurrency(item.subtotal)}<br/>Customização: ${item.customizacao}`;
+                itensDiv.appendChild(p);
+            });
+        }
+    
+        detailsDiv.style.display = 'block';
+        detailsDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Handle search
+    document.getElementById('search-button').addEventListener('click', function() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        fetch('/get-orders?search=' + encodeURIComponent(query), { credentials: 'include' })
+            .then(async response => {
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.message || 'Erro ao buscar pedidos.');
+                }
+                return result;
+            })
+            .then(result => {
+                const orders = result.orders;
+                const tableBody = document.getElementById('orders-table-body');
+                tableBody.innerHTML = '';
+
+                orders.forEach(order => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${order.id_pedido}</td>
+                        <td>${new Date(order.data_pedido).toLocaleDateString()}</td>
+                        <td>${new Date(order.data_pedido).toLocaleTimeString()}</td>
+                        <td>${order.itens_do_pedido.map(item => item.nome_produto).join(', ')}</td>
+                        <td>${order.itens_do_pedido.map(item => item.quantidade).join(', ')}</td>
+                        <td>${formatCurrency(order.total_pedido)}</td>
+                    `;
+                    tr.addEventListener('click', () => showOrderDetails(order, tr));
+                    tableBody.appendChild(tr);
+                });
+            })
+            .catch(error => {
+                console.error('Error searching orders:', error);
+                alert('Erro ao buscar pedidos. Por favor, tente novamente.');
+            });
+    });
+
+    // Function to load variants mapping
+    function loadVariantsMapping() {
+        return fetch('/variantsMapping.json')
+            .then(response => response.json())
+            .then(data => {
+                variantsMapping = data;
+                console.log('Variants mapping loaded:', variantsMapping);
+            })
+            .catch(error => {
+                console.error('Error loading variants mapping:', error);
+            });
+    }
+
+    // Initialize everything when the page loads
+    window.onload = function() {
+        loadVariantsMapping()
+            .then(() => {
+                initProductPage();
+                handleBuy();
+                fetchOrders(); // Call fetchOrders on page load
+            })
+            .catch(error => {
+                console.error('Error during initialization:', error);
+            });
+    };
+</script>
+</html>

@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cupcake World</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Pacifico&display=swap" rel="stylesheet"/>
+  <style>
+    /* Global Styles */
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header Styles */
+    .header {
+      background-color: #f8c6c6;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .header img {
+      height: 50px;
+      vertical-align: middle;
+    }
+
+    .header .logo {
+      font-family: 'Pacifico', cursive;
+      font-size: 24px;
+      color: #d35d6e;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .header .nav {
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .header .nav a {
+      color: #ffffff;
+      background-color: #d35d6e;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 0 5px;
+      transition: background-color 0.3s;
+    }
+
+    .header .nav a:hover {
+      background-color: #c14a5c;
+    }
+
+    .header .icons {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .header .icons i {
+      color: #d35d6e;
+      font-size: 24px;
+      margin-left: 15px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .header .icons i:hover {
+      color: #c14a5c;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      flex: 1;
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .main-content h1 {
+      color: #c82333;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .main-content h2 {
+      color: #ff7f50;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* Cupcake Card Styles - Enhanced Vertical Layout */
+    .product-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+      flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    }
+
+    .product-card {
+      background-color: #fff;
+      border: 5px solid #ff7f50;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      width: 400px; /* Adjusted width for better vertical layout */
+      margin: 20px;
+      display: flex; /* Vertical stacking */
+      flex-direction: column; /* Stack image and details vertically */
+      max-width: 100%; /* Ensure it doesn't overflow on smaller screens */
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 16px rgba(0,0,0,0.2);
+    }
+
+    .product-card img {
+      width: 100%; /* Full width */
+      aspect-ratio: 1 / 1; /* Ensures the image is square */
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-details {
+      padding: 20px; /* Increased padding for more space */
+      text-align: left;
+      width: 100%; /* Full width */
+      box-sizing: border-box;
+    }
+
+    .product-details h3 {
+      color: #c82333;
+      font-size: 28px; /* Increased font size for better visibility */
+      margin: 15px 0;
+    }
+
+    .product-details p {
+      font-size: 16px; /* Adjusted font size for readability */
+      color: #333;
+      margin: 10px 0;
+    }
+
+    .product-details label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .product-details input[type="radio"] {
+      margin-right: 10px;
+      transform: scale(1.2); /* Enlarged radio buttons for better UX */
+      vertical-align: middle;
+    }
+
+    /* Price Styles */
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #c82333;
+      margin: 15px 0;
+    }
+
+    .add-to-cart {
+      background-color: #c82333;
+      color: #fff;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .add-to-cart:hover {
+      background-color: #a71d2a;
+    }
+
+    /* Comments Section Styles */
+    .comments-section {
+      margin: 40px 0;
+    }
+
+    .comments-section h2 {
+      color: #c82333;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .comments {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .comment {
+      width: 45%;
+      background-color: #f8f9fa;
+      padding: 20px;
+      margin: 10px 0;
+      border-radius: 5px;
+      text-align: left;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      transition: box-shadow 0.3s;
+    }
+
+    .comment:hover {
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .comment i {
+      color: #ff7f50;
+      margin-right: 10px;
+    }
+
+    .comment h3 {
+      font-size: 18px;
+      margin: 0;
+      color: #c82333;
+    }
+
+    .comment p {
+      font-size: 14px;
+      margin: 5px 0;
+      color: #555;
+    }
+
+    /* Standardized Footer Styles */
+    .footer {
+      background-color: #f47c20;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      display: flex;
+      justify-content: space-around;
+      font-family: 'Roboto', sans-serif;
+      flex-wrap: wrap; /* Ensures responsiveness */
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 16px;
+      transition: color 0.3s;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .footer div {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer span {
+      margin-right: 10px;
+      font-size: 16px;
+    }
+
+    .footer a i {
+      margin: 0 10px;
+      font-size: 20px;
+    }
+
+    /* Botões de Quantidade no Carrinho */
+    .cart-item button.decrease-qty,
+    .cart-item button.increase-qty {
+      background-color: #c82333;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin: 0 5px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .cart-item button.decrease-qty:hover,
+    .cart-item button.increase-qty:hover {
+      background-color: #a71d2a;
+    }
+
+    .cart-item .item-quantity {
+      font-size: 16px;
+      margin: 0 5px;
+    }
+
+    /* Responsive Design Enhancements */
+    @media (max-width: 1200px) {
+      .product-card {
+        width: 90%; /* Reduce width on slightly smaller screens */
+      }
+
+      .product-details {
+        padding: 18px; /* Adjusted padding */
+      }
+    }
+
+    @media (max-width: 992px) {
+      .product-card {
+        width: 90%; /* Adjust width for medium screens */
+      }
+
+      .comment {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product-card {
+        width: 90%;
+        max-width: 500px; /* Adjusted max-width */
+      }
+
+      .product-details h3 {
+        font-size: 24px; /* Slightly reduce font size for smaller screens */
+      }
+
+      .product-details p {
+        font-size: 14px; /* Slightly reduce font size for smaller screens */
+      }
+
+      .add-to-cart {
+        font-size: 16px; /* Adjust font size */
+        padding: 12px 24px; /* Adjust padding */
+      }
+
+      .comments {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .comment {
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .product-card {
+        width: 100%; /* Full width on small screens */
+        max-width: none;
+      }
+
+      .product-details {
+        padding: 15px; /* Adjust padding */
+      }
+
+      .product-details h3 {
+        font-size: 22px; /* Further reduce font size */
+      }
+
+      .product-details p {
+        font-size: 12px; /* Further reduce font size */
+      }
+
+      .add-to-cart {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
+
+      .comment h3 {
+        font-size: 16px;
+      }
+
+      .comment p {
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Section -->
+  <div class="header">
+    <img alt="Cupcake World Logo" height="50" src="https://storage.googleapis.com/a1aa/image/eSGcc0zU9etBpUeEYIY6GBQsf2cvrdCINZgMtfy6yAVqyrteE.jpg" width="50"/>
+    <span class="logo">Cupcake World</span>
+    <div class="nav">
+        <a href="index.html">Início</a>
+        <a href="cupcakes.html">Cupcakes</a>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="contato.html">Contato</a>
+        <a href="suporte.html">Suporte</a>
+    </div>
+    <div class="icons">
+      <i class="fas fa-shopping-cart" id="cart-button"></i>
+      <a href="perfil.html">
+        <i class="fas fa-user-circle"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content Section -->
+  <main class="main-content">
+    <h1>A loja dos seus sonhos,</h1>
+    <h2>direto para a sua casa!</h2>
+    <h2>Sobre o produto que você escolheu...</h2>
+
+    <!-- Cupcake Card Section -->
+    <div class="product-section">
+      <!-- Cupcake Card Template -->
+      <div class="product-card product-item">
+        <!-- Cupcake Image -->
+        <img alt="Cupcake de Limão" height="300" src="https://storage.googleapis.com/a1aa/image/3mHZrcIv1VKeBynDxfL3xJ8ICJtNz1wcM3pTd8w2dF7xnu1TA.jpg" width="300"/>
+        <div class="product-details" data-product-name="Cupcake de Limão" data-id-produto="rec54321" data-variant-id="gid://shopify/ProductVariant/5544332211">
+          <!-- Product Title -->
+          <h3>Cupcake de Limão</h3>
+          <!-- Product Description -->
+          <p>Ingredientes: farinha de trigo, manteiga sem sal, açúcar, ovos, leite, fermento, suco de limão siciliano, leite condensado, creme de leite, raspas de limão taiti, pedacinhos de biscoito de maizena e chantilly.</p>
+          
+          <!-- Coberturas -->
+          <label>Coberturas:</label>
+          <label>
+            <input name="cobertura" type="radio" value="Chocolate branco"/>
+            Chocolate branco
+          </label>
+          <label>
+            <input name="cobertura" type="radio" value="Chocolate ao leite"/>
+            Chocolate ao leite
+          </label>
+          <label>
+            <input name="cobertura" type="radio" value="Chocolate meio amargo"/>
+            Chocolate meio amargo
+          </label>
+          
+          <!-- Confeites -->
+          <label>Confeites:</label>
+          <label>
+            <input name="confeite" type="radio" value="Coco ralado"/>
+            Coco ralado
+          </label>
+          <label>
+            <input name="confeite" type="radio" value="Granulado colorido"/>
+            Granulado colorido
+          </label>
+          <label>
+            <input name="confeite" type="radio" value="Corações vermelhos"/>
+            Corações vermelhos
+          </label>
+          <label>
+            <input name="confeite" type="radio" value="Granulado de chocolate suiço"/>
+            Granulado de chocolate suiço
+          </label>
+          
+          <!-- Fixed Price Display -->
+          <p class="price">Preço: R$ 8,50</p>
+          
+          <!-- Add to Cart Button -->
+          <button class="add-to-cart">Adicionar ao carrinho</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+      <h2>Comentários de clientes</h2>
+      <div class="comments">
+        <!-- Comment Template -->
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Mariano Belo</h3>
+          <p>26/05/2024</p>
+          <p>Nunca tinha experimentado um cupcake assim antes, sem dúvida esse virou o meu sabor favorito :)</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Roberto Carlos</h3>
+          <p>25/05/2024</p>
+          <p>Excelente, minha esposa amou!</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Freddie Mercury</h3>
+          <p>14/05/2024</p>
+          <p>Queridos, este cupcake de Limão é uma sinfonia de sabores, uma criação celestial, digno dos deuses e seus amores. Como "Bohemian Rhapsody", é complexo e divino!</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Harry Styles</h3>
+          <p>05/05/2024</p>
+          <p>É o tipo de doce que até a tristeza espanta. Então, trate as pessoas com gentileza e compartilhe essa delícia, porque esse cupcake, meus amigos, é pura felicidade.</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Marlene Souza</h3>
+          <p>20/05/2024</p>
+          <p>Comprei para a festa de aniversário das minhas netinhas, todo mundo adorou.</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Elvis Presley</h3>
+          <p>15/05/2024</p>
+          <p>Não pude evitar me apaixonar por esse bolinho de Limão. Definitivamente o rei do rock 'n' roll dos doces!</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Roger Waters</h3>
+          <p>02/05/2024</p>
+          <p>Este cupcake é uma obra de arte, uma joia encontrada, mais do que um simples bolinho é sim uma experiência para sentir, como as notas de "The Wall", ele é autêntico e real.</p>
+        </div>
+        
+        <div class="comment">
+          <i class="fas fa-user-circle"></i>
+          <h3>Sigmund Freud</h3>
+          <p>10/05/2024</p>
+          <p>Meu cérebro sentiu cada ingrediente com prazer, cada mordida uma sensação única, indico esse cupcake para todos meus amigos.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <div>
+        <a href="sobrenos.html">Sobre nós</a>
+        <a href="perfil.html">Meu perfil</a>
+        <a href="historico.html">Histórico de pedidos</a>
+        <a href="cupcakes.html">Nosso cardápio</a>
+    </div>
+    <div>
+      <span>Siga-nos nas redes sociais!</span>
+      <a href="#"><i class="fab fa-facebook-f"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+    </div>
+  </div>
+  
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" style="display: none; position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: #fff; box-shadow: -2px 0 5px rgba(0,0,0,0.3); padding: 20px; overflow-y: auto; z-index: 1000;">
+    <button id="cart-close" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 20px; cursor: pointer;">&times;</button>
+    <h2>Carrinho</h2>
+    <div id="cart-items">
+      <!-- Cart items serão inseridos dinamicamente aqui -->
+    </div>
+    <p><strong>Total:</strong> <span id="cart-total">R$ 0,00</span></p>
+    <button id="buy-button" class="add-to-cart">Comprar</button>
+  </div>
+</body>
+<script>
+    let variantsMapping = {};
+
+    // Fetch the variantsMapping.json file (apenas uma vez)
+    fetch('/variantsMapping.json')
+      .then(response => response.json())
+      .then(data => {
+        variantsMapping = data;
+        console.log('Variants mapping loaded:', variantsMapping);
+        initProductPage();
+        handleBuy();
+      })
+      .catch(error => {
+        console.error('Error loading variants mapping:', error);
+      });
+
+    // Gerenciamento do Carrinho
+    const Cart = {
+      key: 'cartItems',
+      getCart: function() {
+        const cart = localStorage.getItem(this.key);
+        return cart ? JSON.parse(cart) : [];
+      },
+      saveCart: function(cart) {
+        localStorage.setItem(this.key, JSON.stringify(cart));
+      },
+      addItem: function(item) {
+        const cart = this.getCart();
+        // Verificar se o item já existe (mesmo variantId)
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.variantId === item.variantId);
+        if (existingItemIndex !== -1) {
+          // Atualizar quantidade existente
+          cart[existingItemIndex].quantidade += item.quantidade;
+        } else {
+          cart.push(item);
+        }
+        this.saveCart(cart);
+      },
+      removeItem: function(index) {
+        const cart = this.getCart();
+        cart.splice(index, 1);
+        this.saveCart(cart);
+      },
+      clearCart: function() {
+        this.saveCart([]);
+      },
+      updateQuantity: function(index, delta) {
+        const cart = this.getCart();
+        const newQuantity = cart[index].quantidade + delta;
+        if (newQuantity > 0) {
+          cart[index].quantidade = newQuantity;
+        } else {
+          // Remover item se a quantidade for zero ou negativa
+          cart.splice(index, 1);
+        }
+        this.saveCart(cart);
+      }
+    };
+
+    // Função para formatar moeda
+    function formatCurrency(value) {
+      return 'R$ ' + parseFloat(value).toFixed(2).replace('.', ',');
+    }
+
+    // Função para atualizar o carrinho na sidebar
+    function updateCartSidebar() {
+      const cart = Cart.getCart();
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartTotal = document.getElementById('cart-total');
+
+      // Limpar itens atuais
+      cartItemsContainer.innerHTML = '';
+
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('cart-item');
+
+        // Calcular subtotal
+        const subtotal = parseFloat(item.preco) * item.quantidade;
+        total += subtotal;
+
+        itemDiv.innerHTML = `
+          <p><strong>${item.nome}</strong></p>
+          <p>Cobertura: ${item.cobertura}</p>
+          <p>Confeites: ${item.confeite}</p>
+          <p>
+            <button class="decrease-qty" data-index="${index}">-</button>
+            <span class="item-quantity">${item.quantidade}</span>
+            <button class="increase-qty" data-index="${index}">+</button>
+          </p>
+          <p>Subtotal: ${formatCurrency(subtotal.toFixed(2))}</p>
+          <button data-index="${index}" class="remove-item">Remover</button>
+          <hr/>
+        `;
+
+        cartItemsContainer.appendChild(itemDiv);
+      });
+
+      cartTotal.textContent = formatCurrency(total.toFixed(2));
+
+      // Adicionar event listeners para remover itens
+      const removeButtons = document.querySelectorAll('.remove-item');
+      removeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const index = this.getAttribute('data-index');
+          Cart.removeItem(index);
+          updateCartSidebar();
+        });
+      });
+
+      // Adicionar event listeners para aumentar quantidade
+      const increaseButtons = document.querySelectorAll('.increase-qty');
+      increaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const index = this.getAttribute('data-index');
+          Cart.updateQuantity(index, 1);
+          updateCartSidebar();
+        });
+      });
+
+      // Adicionar event listeners para diminuir quantidade
+      const decreaseButtons = document.querySelectorAll('.decrease-qty');
+      decreaseButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const index = this.getAttribute('data-index');
+          Cart.updateQuantity(index, -1);
+          updateCartSidebar();
+        });
+      });
+    }
+
+    // Função para mostrar a sidebar do carrinho
+    function showCartSidebar() {
+      document.getElementById('cart-sidebar').style.display = 'block';
+    }
+
+    // Função para esconder a sidebar do carrinho
+    function hideCartSidebar() {
+      document.getElementById('cart-sidebar').style.display = 'none';
+    }
+
+    // Função para lidar com o clique no botão "Adicionar ao carrinho"
+    function handleAddToCart(product) {
+      const addToCartBtn = product.querySelector('.add-to-cart');
+
+      addToCartBtn.addEventListener('click', function() {
+        const nome = product.querySelector('h3').textContent.trim();
+        const precoText = product.querySelector('.price') ? product.querySelector('.price').textContent : product.querySelector('p').textContent;
+        let preco = 0;
+        if (precoText.includes('Preço: R$ ')) {
+          preco = precoText.replace('Preço: R$ ', '').replace(',', '.');
+        } else {
+          preco = precoText.replace('R$', '').replace(',', '.');
+        }
+
+        const cobertura = product.querySelector('input[name="cobertura"]:checked')?.value.trim() || '';
+        const confeite = product.querySelector('input[name="confeite"]:checked')?.value.trim() || '';
+
+        // Obter o nome do produto
+        const productName = product.getAttribute('data-product-name') || nome;
+
+        // Determinar o variantId com base no nome do produto, cobertura e confeite
+        const key = `${productName}|${cobertura}|${confeite}`;
+        const variantId = variantsMapping[key];
+
+        if (!variantId) {
+          alert('Selecione uma combinação válida de cobertura e confeite.');
+          return;
+        }
+
+        const quantidade = 1; // Quantidade inicial
+
+        const item = {
+          nome,
+          preco,
+          cobertura,
+          confeite,
+          variantId,
+          quantidade
+        };
+
+        Cart.addItem(item);
+        updateCartSidebar();
+        showCartSidebar();
+      });
+    }
+
+    // Função para inicializar a página de produto
+    function initProductPage() {
+      const products = document.querySelectorAll('.product-item');
+      products.forEach(product => handleAddToCart(product));
+
+      // Inicializar a sidebar do carrinho
+      updateCartSidebar();
+
+      // Event listeners para fechar a sidebar do carrinho
+      document.getElementById('cart-close').addEventListener('click', hideCartSidebar);
+
+      // Event listener para abrir a sidebar do carrinho
+      document.getElementById('cart-button').addEventListener('click', showCartSidebar);
+    }
+
+    // Função para lidar com o clique no botão "Comprar"
+    function handleBuy() {
+      const buyButton = document.getElementById('buy-button');
+      buyButton.addEventListener('click', function() {
+        const cart = Cart.getCart();
+
+        if (cart.length === 0) {
+          alert('Seu carrinho está vazio.');
+          return;
+        }
+
+        // Enviar dados do carrinho para o servidor
+        fetch('/create-order', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include',
+          body: JSON.stringify({ cart })
+        })
+        .then(async response => {
+          const result = await response.json();
+          if (!response.ok) {
+            throw new Error(result.message || 'Erro desconhecido.');
+          }
+          return result;
+        })
+        .then(result => {
+          if (result.success) {
+            // Limpar o carrinho
+            Cart.clearCart();
+            updateCartSidebar();
+
+            // Redirecionar para a URL de checkout do Shopify
+            window.location.href = result.checkoutUrl;
+          }
+        })
+        .catch(error => {
+            console.error('Error creating order:', error);
+            // Verifique se o objeto de erro possui uma mensagem
+            const errorMessage = error.message || 'Erro desconhecido.';
+            alert(`Erro ao criar o pedido: ${errorMessage}`);
+        });
+      });
+    }
+
+    // Inicializar a sidebar do carrinho e o botão de comprar
+    window.onload = function() {
+    };
+</script>
+</html>
